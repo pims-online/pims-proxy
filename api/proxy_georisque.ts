@@ -2,13 +2,20 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 // Deploy a serverless function to handle CORS issues
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const { queryParams } = req.query;
+  const { code_insee, adresse, latlon } = req.query;
 
-  if (!queryParams) {
-    return res.status(400).json({ error: "Missing query params" });
+  if (!code_insee && !adresse && !latlon) {
+    return res.status(400).json({ error: "Missing query params. Required one param : code_insee, adresse, latlon." });
   }
 
-  const url = `https://georisques.gouv.fr/api/v1/resultats_rapport_risque?${queryParams}`;
+  let url = 'https://georisques.gouv.fr/api/v1/resultats_rapport_risque?';
+  if (code_insee) {
+    url = url + `code_insee=${code_insee}` 
+  } else if (adresse) {
+    url = url + `adresse=${adresse}` 
+  } else if (latlon) {
+    url = url + `latlon=${latlon}`
+  }
 
   try {
     const response = await fetch(url, {
