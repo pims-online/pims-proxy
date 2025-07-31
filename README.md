@@ -1,5 +1,7 @@
 # pims-proxy
 
+**Déprecié :** Le proxy PIMS n'est plus nécessaire, les API en aval étant maintenant accessibles sans intermédiaire.
+
 Ce repo contient des serverless functions déployées sur Vercel. Ces fonctions permettent de réaliser des requêtes vers des APIs rencontrant des erreurs CORS lorsqu'elles sont réalisées depuis le client PIMS.
 
 Les proxy se mettent en intermédiaire, pour ajouter aux headers de la réponse les champs nécessaires pour éviter les erreurs CORS.
